@@ -1,0 +1,61 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Application
+    x:Class="ZoaInfoTool.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZoaInfoTool"
+    RequestedTheme="Dark">
+    
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <!-- Other merged dictionaries here -->
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Dark">
+                            <!-- The "Default" theme dictionary is used unless a specific
+                                         light, dark, or high contrast dictionary is provided. These
+                                         resources should be tested with both the light and dark themes,
+                                         and specific light or dark resources provided as needed. -->
+                            <!--<AcrylicBrush x:Key="NavigationViewTopPaneBackground"
+                                          TintColor="DarkGray" 
+                                          TintOpacity="0.1"  />-->
+                            <SolidColorBrush x:Key="ButtonBackground" Color="RoyalBlue" Opacity="0.2"/>
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="RoyalBlue" Opacity="0.4"/>
+                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="RoyalBlue" Opacity="0.7"/>
+
+                            <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="RoyalBlue" Opacity="0.2"/>
+                            <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="RoyalBlue" />
+
+                            <!--<SolidColorBrush x:Key="AppBarButtonBackground" Color="RoyalBlue" Opacity="0.2"/>
+                            <SolidColorBrush x:Key="AppBarButtonBackgroundPointerOver" Color="RoyalBlue" Opacity="0.4"/>
+                            <SolidColorBrush x:Key="AppBarButtonBackgroundPressed" Color="RoyalBlue" Opacity="0.7"/>
+
+                            <SolidColorBrush x:Key="CommandBarBackground" Color="RoyalBlue" Opacity="0.2"/>-->
+
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="HighContrast">
+                            <!-- Always include a "HighContrast" dictionary when you override
+                                         theme resources. This empty dictionary ensures that the 
+                                         default high contrast resources are used when the user
+                                         turns on high contrast mode. -->
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                    <Style x:Key="NavButtonStyle" TargetType="Button">
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Bottom" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="VerticalAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="5,15,5,15" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <!--<Setter Property="FontFamily" Value="Cascadia Code" />-->
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Other app resources here -->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

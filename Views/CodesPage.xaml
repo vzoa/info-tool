@@ -1,0 +1,169 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Page
+    x:Class="ZoaInfoTool.Views.CodesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZoaInfoTool.Views"
+    xmlns:utils="using:ZoaInfoTool.Utils"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    NavigationCacheMode="Enabled">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{x:Bind utils:Converters.GridLengthTrueEqualsStar(ViewModel.DataIsNotReady), Mode=OneWay}" />
+            <RowDefinition Height="{x:Bind utils:Converters.GridLengthTrueEqualsStar(ViewModel.DataIsReady), Mode=OneWay}" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Visibility="{x:Bind ViewModel.DataIsNotReady, Mode=OneWay}">
+            <TextBlock FontSize="24" FontStyle="Italic" HorizontalTextAlignment="Center" VerticalAlignment="Center" Text="Data loading..." />
+        </Grid>
+
+        <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.DataIsReady, Mode=OneWay}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                
+                <!--Airline Callsign Table-->
+                <StackPanel Orientation="Vertical" Margin="0,0,30,0">
+                    <TextBlock Text="Airline" Margin="0,0,0,8"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <TextBox x:Name="AirlineTb" PlaceholderText="3 chars" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{x:Bind ViewModel.AirlineIcaoCodeInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{x:Bind ViewModel.DataIsReady, Mode=OneWay}"/>
+                        <Button x:Name="GoAirlineBtn" Content="Go" VerticalAlignment="Center" Command="{x:Bind ViewModel.LookupAirlineCommand}" Margin="10,0,0,0" />
+                    </StackPanel>
+                </StackPanel>
+                
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" TextAlignment="Left" Text="Callsign" Margin="0,0,0,5" Padding="15,0,0,0" FontWeight="Bold" />
+                    <TextBlock Grid.Column="1" TextAlignment="Left" Text="Airline Name" Margin="0,0,0,5" Padding="15,0,0,0" FontWeight="Bold" />
+                    <TextBlock Grid.Column="2" TextAlignment="Left" Text="Country" Margin="0,0,0,5" Padding="15,0,0,0" FontWeight="Bold" />
+                    <Border BorderBrush="DarkGray" BorderThickness="0,0,0,1" Grid.Row="0" Grid.ColumnSpan="3"/>
+
+                    <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Left" Text="{x:Bind ViewModel.Airline.Callsign, Mode=OneWay}" Visibility="{x:Bind ViewModel.AirlineFound, Mode=OneWay}" Margin="0,5,0,0" Padding="15,0,0,0" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Left" Text="{x:Bind ViewModel.Airline.Name, Mode=OneWay}" Visibility="{x:Bind ViewModel.AirlineFound, Mode=OneWay}" Margin="0,5,0,0" Padding="15,0,0,0" />
+                    <TextBlock Grid.Column="2" Grid.Row="1"  TextAlignment="Left" Text="{x:Bind ViewModel.Airline.Country, Mode=OneWay}" Visibility="{x:Bind ViewModel.AirlineFound, Mode=OneWay}" Margin="0,5,0,0" Padding="15,0,0,0" />
+                </Grid>
+
+                <!--Airport Name Table-->
+                <StackPanel Orientation="Vertical" Grid.Row="1">
+                    <TextBlock Text="Airport" Margin="0,0,0,8"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="AirportTb" PlaceholderText="4 chars" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{x:Bind ViewModel.AirportIcaoCodeInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button x:Name="GoAirportBtn" Content="Go" VerticalAlignment="Center" Command="{x:Bind ViewModel.LookupAirportCommand}" Margin="10,0,0,0" />
+                    </StackPanel>
+                </StackPanel>
+
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" TextAlignment="Left" Text="Name" Margin="0,0,0,5" Padding="15,0,0,0" FontWeight="Bold" />
+                    <TextBlock Grid.Column="1" TextAlignment="Left" Text="ARTCC / FIR" Margin="0,0,0,5" Padding="15,0,0,0" FontWeight="Bold" />
+                    <Border BorderBrush="DarkGray" BorderThickness="0,0,0,1" Grid.Row="0" Grid.ColumnSpan="3"/>
+
+                    <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Left" Text="{x:Bind ViewModel.Airport.Name, Mode=OneWay}" Visibility="{x:Bind ViewModel.AirportFound, Mode=OneWay}" Margin="0,5,0,0" Padding="15,0,0,0" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Left" Text="{x:Bind ViewModel.Airport.Fir, Mode=OneWay}" Visibility="{x:Bind ViewModel.AirportFound, Mode=OneWay}" Margin="0,5,0,0" Padding="15,0,0,0" />
+                </Grid>
+
+
+                <!--Aircraft Table-->
+                <StackPanel Orientation="Vertical" Grid.Row="2">
+                    <TextBlock Text="Aircraft" Margin="0,0,0,8"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="AircraftTb" PlaceholderText="4 chars" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{x:Bind ViewModel.AircraftIcaoCodeInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button x:Name="GoAircraftBtn" Content="Go" VerticalAlignment="Center" Command="{x:Bind ViewModel.LookupAircraftCommand}" Margin="10,0,0,0" />
+                    </StackPanel>
+                </StackPanel>
+
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" TextAlignment="Left" Text="Manufacturer" Margin="0,0,0,5" Padding="15,0,0,0" FontWeight="Bold" />
+                    <TextBlock Grid.Column="1" TextAlignment="Left" Text="Model" Margin="0" Padding="15,0,0,0" FontWeight="Bold" />
+                    <TextBlock Grid.Column="2" TextAlignment="Left" Text="Description" Margin="0" Padding="15,0,0,0" FontWeight="Bold" />
+                    <TextBlock Grid.Column="3" TextAlignment="Center" Text="Type" Margin="0" Padding="15,0,0,0" FontWeight="Bold" />
+                    <TextBlock Grid.Column="4" TextAlignment="Center" Text="Engines" Margin="0" Padding="15,0,0,0" FontWeight="Bold" />
+                    <TextBlock Grid.Column="5" TextAlignment="Center" Text="FAA WTC" Margin="0" Padding="15,0,0,0" FontWeight="Bold" />
+
+                    <Border BorderBrush="DarkGray" BorderThickness="0,0,0,1" Grid.ColumnSpan="6" />
+
+
+                    <ListView x:Name="RoutesListView" Grid.Row="1" Grid.ColumnSpan="6" ItemsSource="{x:Bind ViewModel.Aircrafts}" Margin="0,5,0,0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0" Padding="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding Manufacturer}" TextWrapping="Wrap" />
+                                    <TextBlock Grid.Column="1" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding Model}" TextWrapping="Wrap" />
+                                    <TextBlock Grid.Column="2" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding Description}" TextWrapping="Wrap" />
+                                    <TextBlock Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding EngineType}" />
+                                    <TextBlock Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding EngineCount}" />
+                                    <TextBlock Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding FaaWakeTurbulenceCategory}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
+                                <Setter Property="Margin" Value="0,0,0,0" />
+                                <Setter Property="Padding" Value="0,0,0,0" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </Grid>
+
+</Page>

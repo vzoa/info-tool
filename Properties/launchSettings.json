@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ZoaInfo (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ZoaInfo (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
