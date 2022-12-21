@@ -1,0 +1,101 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Page
+    x:Class="ZoaInfoTool.Views.DatisPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZoaInfoTool.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    NavigationCacheMode="Enabled">
+
+    <Page.Resources>
+        <Color x:Key="DepArrSelectedBackground">RoyalBlue</Color>
+        <Color x:Key="DepArrSelectedForeground">White</Color>
+        <Color x:Key="DepArrUnselectedBackground">DarkGray</Color>
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox x:Name="AirportsComboBox" ItemsSource="{x:Bind ViewModel.AirportNames, Mode=OneWay}"
+                      Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                      PlaceholderText="{x:Bind ViewModel.DropdownPlaceholderText, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedAirport, Mode=TwoWay}"
+                      Width="200" FontFamily="Cascadia Code" IsEnabled="True">
+            </ComboBox>
+
+
+            <ToggleSwitch AutomationProperties.Name="simple ToggleSwitch" x:Name="dark_switch" Grid.Column="1" CornerRadius="3"
+                          VerticalAlignment="Center"  HorizontalAlignment="Right" MinWidth="0"
+                          OffContent="Dark" OnContent="Light"
+                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Cascadia Code" Visibility="Collapsed"/>
+        </Grid>
+
+        <Grid x:Name="Control1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{x:Bind ViewModel.AtisTitle, Mode=OneWay}"
+            IsTextSelectionEnabled="False" FontSize="25" FontFamily="Cascadia Code" FontWeight="Bold" />
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{x:Bind ViewModel.AtisText, Mode=OneWay}"
+            IsTextSelectionEnabled="True" TextWrapping="Wrap" FontFamily="Cascadia Code" Margin="45, 50, 45, 10" />
+           
+            <Button x:Name="btnDeparture" Grid.Row="2" Grid.Column="0" Content="Departure" FontFamily="Cascadia Code"
+                    HorizontalAlignment="Right" Margin="5,5,5,5" Width="120" Visibility="{x:Bind ViewModel.BtnDepartureVisibility, Mode=OneWay}"
+                    IsEnabled="{x:Bind ViewModel.BtnDepartureEnabled, Mode=OneWay}"
+                    Command="{x:Bind ViewModel.DepArrToggleCommand, Mode=OneWay}">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Default">
+                                <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="{StaticResource DepArrSelectedBackground}" />
+                                <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{StaticResource DepArrSelectedForeground}" />
+                                <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource DepArrUnselectedBackground}" Opacity=".2"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+
+            <Button x:Name="btnArrival" Grid.Row="2" Grid.Column="1" Content="Arrival" FontFamily="Cascadia Code"
+                    HorizontalAlignment="Left" Margin="5,5,5,5" Width="120" Visibility="{x:Bind ViewModel.BtnArrivalVisibility, Mode=OneWay}"
+                    IsEnabled="{x:Bind ViewModel.BtnArrivalEnabled, Mode=OneWay}"
+                    Command="{x:Bind ViewModel.DepArrToggleCommand, Mode=OneWay}">
+                <Button.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Default">
+                            <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="{StaticResource DepArrSelectedBackground}" />
+                            <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{StaticResource DepArrSelectedForeground}" />
+                            <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource DepArrUnselectedBackground}" Opacity=".2" />
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+
+        </Grid>
+    </Grid>
+</Page>

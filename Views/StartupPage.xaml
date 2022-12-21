@@ -1,0 +1,27 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Page
+    x:Class="ZoaInfoTool.Views.StartupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZoaInfoTool.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <Image Source="/Assets/StartupLogo-512x512.png" Width="200" Height="200"/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="36" Text="ZOA Info Tool" />
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock FontSize="16" Text="Version:" />
+                <TextBlock FontSize="16" Margin="5,0,0,0" Text="{x:Bind AssemblyVersion}" />
+            </StackPanel>
+            <TextBlock HorizontalAlignment="Center" FontSize="16" Text="Developed by Ken Greim" />
+            
+        </StackPanel>
+        
+    </Grid>
+</Page>
