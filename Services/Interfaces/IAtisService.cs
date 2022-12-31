@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using ZoaInfoTool.Models;
 
-namespace ZoaInfoTool.Services.Interfaces
+namespace ZoaInfoTool.Services.Interfaces;
+
+public interface IAtisService
 {
-    public interface IAtisService
-    {
-        public Task<List<Atis>> GetAllAsync();
-    }
+    public Task<List<Atis>> GetAllAsync();
 }

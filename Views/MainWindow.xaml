@@ -34,7 +34,10 @@
                FontFamily="Cascadia Code"
                Grid.Column="2"
                VerticalAlignment="Center"
-               Margin="10,0,0,0"/>
+               Margin="10,0,0,0">
+                <Run x:Name="ClockSpacer" Text=" " />
+                <Run x:Name="Clock" Text="{x:Bind ClockViewModel.ClockString, Mode=OneWay}" />
+            </TextBlock>
             <Border BorderBrush="RoyalBlue" Opacity="0.4" BorderThickness="0,0,0,1" Grid.ColumnSpan="7" />
         </Grid>
 

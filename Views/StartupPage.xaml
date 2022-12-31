@@ -19,8 +19,13 @@
                 <TextBlock FontSize="16" Text="Version:" />
                 <TextBlock FontSize="16" Margin="5,0,0,0" Text="{x:Bind AssemblyVersion}" />
             </StackPanel>
-            <TextBlock HorizontalAlignment="Center" FontSize="16" Text="Developed by Ken Greim" />
-            
+            <TextBlock HorizontalAlignment="Center" FontSize="16">
+                <Hyperlink NavigateUri="https://oakartcc.org/" Foreground="White">Oakland ARTCC Website</Hyperlink>
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Center" FontSize="16">
+                <Hyperlink NavigateUri="https://github.com/vzoa/info-tool" Foreground="White">Source code on GitHub</Hyperlink>
+            </TextBlock>
+
         </StackPanel>
         
     </Grid>

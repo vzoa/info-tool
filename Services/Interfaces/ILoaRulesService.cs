@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using ZoaInfoTool.Models;
 
-namespace ZoaInfoTool.Services.Interfaces
+namespace ZoaInfoTool.Services.Interfaces;
+
+public interface ILoaRulesService
 {
-    public interface ILoaRulesService
-    {
-        public Task<List<LoaRule>> FetchLoaRulesAsync();
-    }
+    public Task<List<LoaRule>> FetchLoaRulesAsync();
 }

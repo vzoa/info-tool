@@ -3,56 +3,55 @@ using Microsoft.UI.Xaml.Data;
 using System;
 using ZoaInfoTool.Models;
 
-namespace ZoaInfoTool.Utils
+namespace ZoaInfoTool.Utils;
+
+public static class Converters
 {
-    public static class Converters
+    public static GridLength GridLengthTrueEqualsStar(bool value)
     {
-        public static GridLength GridLengthTrueEqualsStar(bool value)
-        {
-            return value ? new GridLength(1, GridUnitType.Star) : GridLength.Auto;
-        }
-
-        public static GridLength GridLengthTrueEqualsAuto(bool value)
-        {
-            return value ? GridLength.Auto : new GridLength(1, GridUnitType.Star);
-        }
+        return value ? new GridLength(1, GridUnitType.Star) : GridLength.Auto;
     }
 
-    public class AliasRunwayToStringConverter : IValueConverter
+    public static GridLength GridLengthTrueEqualsAuto(bool value)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            int? runway = (int?)value;
-            return runway is not null ? runway.ToString() : "Any";
-        }
+        return value ? GridLength.Auto : new GridLength(1, GridUnitType.Star);
+    }
+}
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+public class AliasRunwayToStringConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, string language)
+    {
+        int? runway = (int?)value;
+        return runway is not null ? runway.ToString() : "Any";
     }
 
-    public class ChartTypetoStringConverter : IValueConverter
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            return (ChartType)value switch
-            {
-                ChartType.AirportDiagram => "Airport Diagram",
-                ChartType.AirportMinimums => "Minimums",
-                ChartType.HotSpots => "Hot Spots",
-                ChartType.STAR => "STAR",
-                ChartType.DP => "SID",
-                ChartType.IAP => "Approaches",
-                ChartType.Unknown => "Unknown",
-                _ => "Unknown"
-            };
-        }
+        throw new NotImplementedException();
+    }
+}
 
-        // ConvertBack is not implemented for a OneWay binding.
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
+public class ChartTypetoStringConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, string language)
+    {
+        return (ChartType)value switch
         {
-            throw new NotImplementedException();
-        }
+            ChartType.AirportDiagram => "Airport Diagram",
+            ChartType.AirportMinimums => "Minimums",
+            ChartType.HotSpots => "Hot Spots",
+            ChartType.STAR => "STAR",
+            ChartType.DP => "SID",
+            ChartType.IAP => "Approaches",
+            ChartType.Unknown => "Unknown",
+            _ => "Unknown"
+        };
+    }
+
+    // ConvertBack is not implemented for a OneWay binding.
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
     }
 }

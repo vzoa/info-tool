@@ -10,46 +10,45 @@ using System.Threading.Tasks;
 using ZoaInfoTool.Models;
 using ZoaInfoTool.Services.Interfaces;
 
-namespace ZoaInfoTool.Services
+namespace ZoaInfoTool.Services;
+
+public class GithubLoaService : ILoaRulesService
 {
-    public class GithubLoaService : ILoaRulesService
+    private readonly HttpClient _httpClient;
+
+    public GithubLoaService(HttpClient httpClient)
     {
-        private readonly HttpClient _httpClient;
-
-        public GithubLoaService(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
-
-        public async Task<List<LoaRule>> FetchLoaRulesAsync()
-        {
-            string responseBody = await _httpClient.GetStringAsync(Constants.LoaRulesCsvUrl);
-
-            var returnList = new List<LoaRule>();
-            using (var csv = new CsvReader(new StringReader(responseBody), CultureInfo.InvariantCulture))
-            {
-                csv.Context.RegisterClassMap<LoaRuleMap>();
-                var records = csv.GetRecords<LoaRule>();
-
-                foreach (var record in records)
-                {
-                    returnList.Add(record);
-                }
-
-                return returnList;
-            }
-        }
+        _httpClient = httpClient;
     }
 
-    internal class LoaRuleMap : ClassMap<LoaRule>
+    public async Task<List<LoaRule>> FetchLoaRulesAsync()
     {
-        public LoaRuleMap()
+        string responseBody = await _httpClient.GetStringAsync(Constants.LoaRulesCsvUrl);
+
+        var returnList = new List<LoaRule>();
+        using (var csv = new CsvReader(new StringReader(responseBody), CultureInfo.InvariantCulture))
         {
-            Map(m => m.DepartureAirportRegex).Convert(args => new Regex(args.Row.GetField("Departure_Regex")));
-            Map(m => m.ArrivalAirportRegex).Convert(args => new Regex(args.Row.GetField("Arrival_Regex")));
-            Map(m => m.Route).Name("Route");
-            Map(m => m.IsRnavRequired).Name("RNAV Required");
-            Map(m => m.Notes).Name("Notes");
+            csv.Context.RegisterClassMap<LoaRuleMap>();
+            var records = csv.GetRecords<LoaRule>();
+
+            foreach (var record in records)
+            {
+                returnList.Add(record);
+            }
+
+            return returnList;
         }
+    }
+}
+
+internal class LoaRuleMap : ClassMap<LoaRule>
+{
+    public LoaRuleMap()
+    {
+        Map(m => m.DepartureAirportRegex).Convert(args => new Regex(args.Row.GetField("Departure_Regex")));
+        Map(m => m.ArrivalAirportRegex).Convert(args => new Regex(args.Row.GetField("Arrival_Regex")));
+        Map(m => m.Route).Name("Route");
+        Map(m => m.IsRnavRequired).Name("RNAV Required");
+        Map(m => m.Notes).Name("Notes");
     }
 }

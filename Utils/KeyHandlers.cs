@@ -2,19 +2,18 @@
 using Microsoft.UI.Xaml.Input;
 using Windows.System;
 
-namespace ZoaInfoTool.Utils
+namespace ZoaInfoTool.Utils;
+
+public static class KeyHandlers
 {
-    public static class KeyHandlers
+    public static KeyEventHandler NewOnEnterCommandHandler(IRelayCommand command)
     {
-        public static KeyEventHandler NewOnEnterCommandHandler(IRelayCommand command)
+        return new KeyEventHandler((sender, e) =>
         {
-            return new KeyEventHandler((sender, e) =>
+            if (e.Key == VirtualKey.Enter)
             {
-                if (e.Key == VirtualKey.Enter)
-                {
-                    command.Execute(null);
-                }
-            });
-        }
+                command.Execute(null);
+            }
+        });
     }
 }

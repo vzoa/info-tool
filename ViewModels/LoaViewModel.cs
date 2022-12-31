@@ -6,52 +6,51 @@ using System.Collections.ObjectModel;
 using ZoaInfoTool.Models;
 using ZoaInfoTool.Services.Interfaces;
 
-namespace ZoaInfoTool.ViewModels
+namespace ZoaInfoTool.ViewModels;
+
+public partial class LoaViewModel : ObservableObject
 {
-    public partial class LoaViewModel : ObservableObject
+    private ILoaRulesService LoaFetcher;
+    private List<LoaRule> LoaRules;
+
+    [ObservableProperty]
+    private string departureAirport;
+
+    [ObservableProperty]
+    private string arrivalAirport;
+
+    public ObservableCollection<LoaRule> MatchedLoaRules;
+
+    public LoaViewModel(ILoaRulesService loaFetcher)
     {
-        private ILoaRulesService LoaFetcher;
-        private List<LoaRule> LoaRules;
+        LoaFetcher = loaFetcher;
+        MatchedLoaRules = new ObservableCollection<LoaRule>();
+        InitializeAsync();
+    }
 
-        [ObservableProperty]
-        private string departureAirport;
+    private async void InitializeAsync()
+    {
+        LoaRules = await LoaFetcher.FetchLoaRulesAsync();
+    }
 
-        [ObservableProperty]
-        private string arrivalAirport;
+    [RelayCommand]
+    private void MatchLoaRules()
+    {
+        MatchedLoaRules.Clear();
 
-        public ObservableCollection<LoaRule> MatchedLoaRules;
-
-        public LoaViewModel(ILoaRulesService loaFetcher)
+        if (!String.IsNullOrEmpty(DepartureAirport) && !String.IsNullOrEmpty(ArrivalAirport))
         {
-            LoaFetcher = loaFetcher;
-            MatchedLoaRules = new ObservableCollection<LoaRule>();
-            InitializeAsync();
-        }
+            // Add K to start of airport ID if needed
+            string checkedDeparture = (DepartureAirport.Length == 3 ? "K" : "") + DepartureAirport.ToUpper();
+            string checkedArrival = (ArrivalAirport.Length == 3 ? "K" : "") + ArrivalAirport.ToUpper();
 
-        private async void InitializeAsync()
-        {
-            LoaRules = await LoaFetcher.FetchLoaRulesAsync();
-        }
+            // TODO: check also that departure airport is in ZOA
 
-        [RelayCommand]
-        private void MatchLoaRules()
-        {
-            MatchedLoaRules.Clear();
-
-            if (!String.IsNullOrEmpty(DepartureAirport) && !String.IsNullOrEmpty(ArrivalAirport))
+            foreach (var rule in LoaRules)
             {
-                // Add K to start of airport ID if needed
-                string checkedDeparture = (DepartureAirport.Length == 3 ? "K" : "") + DepartureAirport.ToUpper();
-                string checkedArrival = (ArrivalAirport.Length == 3 ? "K" : "") + ArrivalAirport.ToUpper();
-
-                // TODO: check also that departure airport is in ZOA
-
-                foreach (var rule in LoaRules)
+                if (rule.DepartureAirportRegex.IsMatch(checkedDeparture) && rule.ArrivalAirportRegex.IsMatch(checkedArrival))
                 {
-                    if (rule.DepartureAirportRegex.IsMatch(checkedDeparture) && rule.ArrivalAirportRegex.IsMatch(checkedArrival))
-                    {
-                        MatchedLoaRules.Add(rule);
-                    }
+                    MatchedLoaRules.Add(rule);
                 }
             }
         }

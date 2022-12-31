@@ -5,54 +5,53 @@ using System.Collections.ObjectModel;
 using ZoaInfoTool.Models;
 using ZoaInfoTool.Services.Interfaces;
 
-namespace ZoaInfoTool.ViewModels
+namespace ZoaInfoTool.ViewModels;
+
+public partial class AliasRouteViewModel : ObservableObject
 {
-    public partial class AliasRouteViewModel : ObservableObject
+    private IAliasRouteService AliasRouteFetcher { get; set; }
+    private Dictionary<string, List<AliasRoute>> AliasRoutesLookupDict { get; set; }
+
+    [ObservableProperty]
+    private string departureAirport;
+
+    [ObservableProperty]
+    private string arrivalAirport;
+
+    public ObservableCollection<AliasRoute> MatchedAliasRoutes;
+
+    public AliasRouteViewModel(IAliasRouteService aliasRouteFetcher)
     {
-        private IAliasRouteService AliasRouteFetcher { get; set; }
-        private Dictionary<string, List<AliasRoute>> AliasRoutesLookupDict { get; set; }
+        AliasRouteFetcher = aliasRouteFetcher;
+        MatchedAliasRoutes = new ObservableCollection<AliasRoute>();
+        InitializeAsync();
+    }
 
-        [ObservableProperty]
-        private string departureAirport;
+    private async void InitializeAsync()
+    {
+        AliasRoutesLookupDict = await AliasRouteFetcher.FetchAliasRoutesAsync();
+    }
 
-        [ObservableProperty]
-        private string arrivalAirport;
-
-        public ObservableCollection<AliasRoute> MatchedAliasRoutes;
-
-        public AliasRouteViewModel(IAliasRouteService aliasRouteFetcher)
+    [RelayCommand]
+    private void MatchAliasRoutes()
+    {
+        if (DepartureAirport is null || ArrivalAirport is null)
         {
-            AliasRouteFetcher = aliasRouteFetcher;
-            MatchedAliasRoutes = new ObservableCollection<AliasRoute>();
-            InitializeAsync();
+            return;
         }
 
-        private async void InitializeAsync()
+        MatchedAliasRoutes.Clear();
+
+        string departureLookup = departureAirport.Length == 4 ? departureAirport.Substring(1).ToUpper() : departureAirport.ToUpper();
+        string arrivalLookup = arrivalAirport.Length == 4 ? arrivalAirport.Substring(1).ToUpper() : arrivalAirport.ToUpper();
+
+        if (AliasRoutesLookupDict.TryGetValue(departureLookup, out List<AliasRoute> outList))
         {
-            AliasRoutesLookupDict = await AliasRouteFetcher.FetchAliasRoutesAsync();
-        }
-
-        [RelayCommand]
-        private void MatchAliasRoutes()
-        {
-            if (DepartureAirport is null || ArrivalAirport is null)
+            foreach (var aliasRoute in outList)
             {
-                return;
-            }
-            
-            MatchedAliasRoutes.Clear();
-
-            string departureLookup = departureAirport.Length == 4 ? departureAirport.Substring(1).ToUpper() : departureAirport.ToUpper();
-            string arrivalLookup = arrivalAirport.Length == 4 ? arrivalAirport.Substring(1).ToUpper() : arrivalAirport.ToUpper();
-
-            if (AliasRoutesLookupDict.TryGetValue(departureLookup, out List<AliasRoute> outList))
-            {
-                foreach (var aliasRoute in outList)
+                if (aliasRoute.ArrivalAirport == arrivalLookup)
                 {
-                    if (aliasRoute.ArrivalAirport == arrivalLookup)
-                    {
-                        MatchedAliasRoutes.Add(aliasRoute);
-                    }
+                    MatchedAliasRoutes.Add(aliasRoute);
                 }
             }
         }

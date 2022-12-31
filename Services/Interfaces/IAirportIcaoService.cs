@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using ZoaInfoTool.Models;
 
-namespace ZoaInfoTool.Services.Interfaces
+namespace ZoaInfoTool.Services.Interfaces;
+
+public interface IAirportIcaoService
 {
-    public interface IAirportIcaoService
-    {
-        public Task<Dictionary<string, Airport>> FetchAirportsAsync();
-    }
+    public Task<Dictionary<string, Airport>> FetchAirportsAsync();
 }

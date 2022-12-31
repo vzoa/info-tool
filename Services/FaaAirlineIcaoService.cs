@@ -6,48 +6,47 @@ using System.Threading.Tasks;
 using ZoaInfoTool.Models;
 using ZoaInfoTool.Services.Interfaces;
 
-namespace ZoaInfoTool.Services
+namespace ZoaInfoTool.Services;
+
+public class FaaAirlineIcaoService : IAirlineIcaoService
 {
-    public class FaaAirlineIcaoService : IAirlineIcaoService
+    private readonly HttpClient _httpClient;
+
+    public FaaAirlineIcaoService(HttpClient httpClient)
     {
-        private readonly HttpClient _httpClient;
+        _httpClient = httpClient;
+    }
 
-        public FaaAirlineIcaoService(HttpClient httpClient)
+    public async Task<Dictionary<string, Airline>> FetchAirlineIcaoCodesAsync()
+    {
+        try
         {
-            _httpClient = httpClient;
-        }
+            var returnDict = new Dictionary<string, Airline>();
 
-        public async Task<Dictionary<string, Airline>> FetchAirlineIcaoCodesAsync()
-        {
-            try
+            string responseBody = await _httpClient.GetStringAsync(Constants.FaaContractionsUrl);
+            var parser = new HtmlParser();
+            IDocument document = await parser.ParseDocumentAsync(responseBody);
+
+            var tables = document.QuerySelector("#main")?.QuerySelectorAll("table");
+            foreach (var table in tables)
             {
-                var returnDict = new Dictionary<string, Airline>();
-
-                string responseBody = await _httpClient.GetStringAsync(Constants.FaaContractionsUrl);
-                var parser = new HtmlParser();
-                IDocument document = await parser.ParseDocumentAsync(responseBody);
-
-                var tables = document.QuerySelector("#main")?.QuerySelectorAll("table");
-                foreach (var table in tables)
+                var rows = table.QuerySelector("tbody").QuerySelectorAll("tr");
+                foreach (var row in rows)
                 {
-                    var rows = table.QuerySelector("tbody").QuerySelectorAll("tr");
-                    foreach (var row in rows)
-                    {
-                        var columns = row.QuerySelectorAll("td");
-                        string icaoCode = columns[0].TextContent.Trim();
-                        string callsign = columns[3].TextContent.Trim();
-                        string name = columns[1].TextContent.Trim();
+                    var columns = row.QuerySelectorAll("td");
+                    string icaoCode = columns[0].TextContent.Trim();
+                    string callsign = columns[3].TextContent.Trim();
+                    string name = columns[1].TextContent.Trim();
 
-                        returnDict.Add(icaoCode, new Airline(icaoCode, callsign, name));
-                    }
+                    returnDict.Add(icaoCode, new Airline(icaoCode, callsign, name));
                 }
+            }
 
-                return returnDict;
-            }
-            catch (HttpRequestException e)
-            {
-                throw e;
-            }
+            return returnDict;
+        }
+        catch (HttpRequestException e)
+        {
+            throw e;
         }
     }
 }

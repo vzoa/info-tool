@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using ZoaInfoTool.Models;
 
-namespace ZoaInfoTool.Services.Interfaces
+namespace ZoaInfoTool.Services.Interfaces;
+
+public interface IAircraftIcaoService
 {
-    public interface IAircraftIcaoService
-    {
-        public Task<Dictionary<string, List<Aircraft>>> FetchAircraftIcaoCodesAsync();
-    }
+    public Task<Dictionary<string, List<Aircraft>>> FetchAircraftIcaoCodesAsync();
 }

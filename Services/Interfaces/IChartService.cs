@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using ZoaInfoTool.Models;
 
-namespace ZoaInfoTool.Services.Interfaces
+namespace ZoaInfoTool.Services.Interfaces;
+
+public interface IChartService
 {
-    public interface IChartService
-    {
-        public Task<List<Chart>> FetchChartsAsync(string airportFaaId);
-    }
+    public Task<List<Chart>> FetchChartsAsync(string airportFaaId);
 }

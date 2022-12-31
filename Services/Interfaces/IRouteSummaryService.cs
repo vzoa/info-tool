@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using ZoaInfoTool.Models;
 
-namespace ZoaInfoTool.Services.Interfaces
+namespace ZoaInfoTool.Services.Interfaces;
+
+public interface IRouteSummaryService
 {
-    public interface IRouteSummaryService
-    {
-        public Task<List<RouteSummary>> FetchRouteSummariesAsync(string departureIcao, string arrivalIcao);
-    }
+    public Task<List<RouteSummary>> FetchRouteSummariesAsync(string departureIcao, string arrivalIcao);
 }
