@@ -52,7 +52,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource NavButtonStyle}" Grid.Column="0" Content="1. D-ATIS" x:Name="datisBtn" Click="NavBtn_Click">
+            <Button Style="{StaticResource NavButtonStyle}" Grid.Column="0" Content="1. RW D-ATIS" x:Name="datisBtn" Click="NavBtn_Click">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Key="Number1" Modifiers="Control,Menu" />
                     <KeyboardAccelerator Key="NumberPad1" Modifiers="Control,Menu" />

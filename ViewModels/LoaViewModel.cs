@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using ZoaInfoTool.Models;
 using ZoaInfoTool.Services.Interfaces;
 
@@ -38,20 +39,21 @@ public partial class LoaViewModel : ObservableObject
     {
         MatchedLoaRules.Clear();
 
-        if (!String.IsNullOrEmpty(DepartureAirport) && !String.IsNullOrEmpty(ArrivalAirport))
+        if (String.IsNullOrEmpty(departureAirport) || String.IsNullOrEmpty(arrivalAirport))
         {
-            // Add K to start of airport ID if needed
-            string checkedDeparture = (DepartureAirport.Length == 3 ? "K" : "") + DepartureAirport.ToUpper();
-            string checkedArrival = (ArrivalAirport.Length == 3 ? "K" : "") + ArrivalAirport.ToUpper();
+            return;
+        }
 
-            // TODO: check also that departure airport is in ZOA
+        // Add K to start of airport ID if needed
+        string sanitizedDeparture = (DepartureAirport.Length == 3 ? "K" : "") + DepartureAirport.ToUpper();
+        string sanitizedArrival = (ArrivalAirport.Length == 3 ? "K" : "") + ArrivalAirport.ToUpper();
 
-            foreach (var rule in LoaRules)
+        // TODO: check also that departure airport is in ZOA
+        foreach (var rule in LoaRules)
+        {
+            if (rule.DepartureAirportRegex.IsMatch(sanitizedDeparture) && rule.ArrivalAirportRegex.IsMatch(sanitizedArrival))
             {
-                if (rule.DepartureAirportRegex.IsMatch(checkedDeparture) && rule.ArrivalAirportRegex.IsMatch(checkedArrival))
-                {
-                    MatchedLoaRules.Add(rule);
-                }
+                MatchedLoaRules.Add(rule);
             }
         }
     }

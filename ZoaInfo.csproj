@@ -20,6 +20,8 @@
 
 	<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 
+	<ApplicationIcon>Assets\Ico-256x256.ico</ApplicationIcon>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -64,5 +66,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\kengr\source\repos\Zoa\InfoTool\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Assets\Ico-128x128.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Ico-256x256.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

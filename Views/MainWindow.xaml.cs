@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using WinRT.Interop;
+using ZoaInfoTool.Utils;
 using ZoaInfoTool.ViewModels;
 using ZoaInfoTool.Views;
 
@@ -74,6 +75,10 @@ public sealed partial class MainWindow : Window
             { codesBtn, typeof(CodesPage) }
         };
 
+        // Write window settings on window close
+        ISettingsService settings = App.Current.Services.GetRequiredService<ISettingsService>();
+        Closed += ((_, _) => settings.WriteToFileAsync());
+
         // Set to default startup page
         mainFrame.Navigate(typeof(StartupPage));
     }
@@ -98,7 +103,6 @@ public sealed partial class MainWindow : Window
         if (ButtonPageLookup.TryGetValue(SelectedButton, out Type pageType))
         {
             mainFrame.Navigate(pageType, null, new SuppressNavigationTransitionInfo());
-            //mainFrame.Navigate(ButtonPageLookup[SelectedButton]);
         }
     }
 

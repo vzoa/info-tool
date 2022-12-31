@@ -9,15 +9,15 @@ public partial class ClockViewModel : ObservableObject
     [ObservableProperty]
     private string clockString;
 
-    private DispatcherTimer dispatcherTimer;
-    private static string _format = "HH:mm:ss";
+    private readonly DispatcherTimer dispatcherTimer;
+    private static readonly string _format = "HH:mm:ss";
 
     public ClockViewModel()
     {
         ClockString = DateTime.UtcNow.ToString(_format);
         dispatcherTimer = new DispatcherTimer();
         dispatcherTimer.Tick += DispatcherTimer_Tick;
-        dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+        dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
         dispatcherTimer.Start();
     }
 
