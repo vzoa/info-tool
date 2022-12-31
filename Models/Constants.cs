@@ -16,10 +16,10 @@ public class Constants
 
     public const string AircraftCsvFilePath = "/Assets/Data/aircraft.csv";
 
-    public const string AirlinesCsvUrl = "https://raw.githubusercontent.com/kengreim/Zoa-Info-Data/main/airlines.csv";
-    public const string LoaRulesCsvUrl = "https://raw.githubusercontent.com/kengreim/Zoa-Info-Data/main/loa.csv";
-    public const string AliasTxtUrl = "https://raw.githubusercontent.com/kengreim/Zoa-Info-Data/main/ZOA_Alias.txt";
-    public const string AircraftCsvUrl = "https://raw.githubusercontent.com/kengreim/Zoa-Info-Data/main/aircraft.csv";
+    public const string AirlinesCsvUrl = "https://raw.githubusercontent.com/vzoa/info-tool/main/Assets/Data/airlines.csv";
+    public const string LoaRulesCsvUrl = "https://raw.githubusercontent.com/vzoa/info-tool/main/Assets/Data/loa.csv";
+    public const string AliasTxtUrl = "https://raw.githubusercontent.com/vzoa/info-tool/main/Assets/Data/ZOA_Alias.txt";
+    public const string AircraftCsvUrl = "https://raw.githubusercontent.com/vzoa/info-tool/main/Assets/Data/aircraft.csv";
 
     public const int ChartsCacheTtlSeconds = 86400; // 1 day
     public const int RoutesCacheTtlSeconds = 3600; // 1 hour
