@@ -17,6 +17,7 @@ public partial class DatisViewModel : ObservableObject
     private DispatcherQueue Dispatcher { get; set; }
     private IAtisService AtisFetcher { get; set; }
     private Dictionary<string, Airport> AirportDictionary { get; set; }
+    private bool _loopRunning = false;
 
     public ObservableCollection<string> AirportNames { get; private set; }
 
@@ -52,11 +53,14 @@ public partial class DatisViewModel : ObservableObject
         AtisFetcher = atisFetcher;
         Dispatcher = DispatcherQueue.GetForCurrentThread();
         AirportNames = new ObservableCollection<string>();
-        StartUpdateLoop();
     }
 
+    [RelayCommand]
     public async void StartUpdateLoop()
     {
+        if (_loopRunning) return;
+        _loopRunning = true;
+
         await Task.Run(async () =>
         {
             while (true)

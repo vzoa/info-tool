@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using ZoaInfoTool.Models;
 using ZoaInfoTool.Services.Interfaces;
 
@@ -51,16 +52,24 @@ public partial class IcaoCodesViewModel : ObservableObject
         AircraftIcaoFetcher = aircraftFetcher;
         AirportIcaoFetcher = airportFetcher;
         Aircrafts = new ObservableCollection<Aircraft>();
-        InitializeAsync();
     }
 
+    [RelayCommand]
     public async void InitializeAsync()
     {
-        AirlineCodeLookupDict = await AirlineIcaoFetcher.FetchAirlineIcaoCodesAsync();
-        AircraftCodeLookupDict = await AircraftIcaoFetcher.FetchAircraftIcaoCodesAsync();
-        AirportCodeLookupDict = await AirportIcaoFetcher.FetchAirportsAsync();
-        DataIsNotReady = false;
-        DataIsReady = true;
+        if (DataIsNotReady)
+        {
+            var airlineTask = AirlineIcaoFetcher.FetchAirlineIcaoCodesAsync();
+            var aircraftTask = AircraftIcaoFetcher.FetchAircraftIcaoCodesAsync();
+            var airportTask = AirportIcaoFetcher.FetchAirportsAsync();
+
+            await Task.WhenAll(airlineTask, aircraftTask, airportTask);
+            AirlineCodeLookupDict = airlineTask.Result;
+            AircraftCodeLookupDict = aircraftTask.Result;
+            AirportCodeLookupDict = airportTask.Result;
+            DataIsNotReady = false;
+            DataIsReady = true;
+        }
     }
 
     [RelayCommand]

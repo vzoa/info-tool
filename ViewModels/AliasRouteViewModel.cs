@@ -11,6 +11,7 @@ public partial class AliasRouteViewModel : ObservableObject
 {
     private IAliasRouteService AliasRouteFetcher { get; set; }
     private Dictionary<string, List<AliasRoute>> AliasRoutesLookupDict { get; set; }
+    private bool _isInitialized = false;
 
     [ObservableProperty]
     private string departureAirport;
@@ -24,21 +25,22 @@ public partial class AliasRouteViewModel : ObservableObject
     {
         AliasRouteFetcher = aliasRouteFetcher;
         MatchedAliasRoutes = new ObservableCollection<AliasRoute>();
-        InitializeAsync();
     }
 
+    [RelayCommand]
     private async void InitializeAsync()
     {
-        AliasRoutesLookupDict = await AliasRouteFetcher.FetchAliasRoutesAsync();
+        if (!_isInitialized)
+        {
+            AliasRoutesLookupDict = await AliasRouteFetcher.FetchAliasRoutesAsync();
+            _isInitialized = true;
+        }
     }
 
     [RelayCommand]
     private void MatchAliasRoutes()
     {
-        if (DepartureAirport is null || ArrivalAirport is null)
-        {
-            return;
-        }
+        if (DepartureAirport is null || ArrivalAirport is null) return;
 
         MatchedAliasRoutes.Clear();
 
@@ -49,10 +51,7 @@ public partial class AliasRouteViewModel : ObservableObject
         {
             foreach (var aliasRoute in outList)
             {
-                if (aliasRoute.ArrivalAirport == arrivalLookup)
-                {
-                    MatchedAliasRoutes.Add(aliasRoute);
-                }
+                if (aliasRoute.ArrivalAirport == arrivalLookup) MatchedAliasRoutes.Add(aliasRoute);
             }
         }
     }

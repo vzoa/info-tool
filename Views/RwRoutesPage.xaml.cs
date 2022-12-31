@@ -34,7 +34,7 @@ public sealed partial class RwRoutesPage : Page
         ArrAirportTb.KeyDown += KeyHandlers.NewOnEnterCommandHandler(ViewModel.FetchRoutesCommand);
 
         // Set focus on the Departure textbox once the page has fully loaded
-        Loaded += (sender, e) => { DepAirportTb.Focus(FocusState.Programmatic); };
+        Loaded += (sender, e) => DepAirportTb.Focus(FocusState.Programmatic);
     }
 
     // Hander to copy selected Route to clipboard when user hits C on a row

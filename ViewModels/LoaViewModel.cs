@@ -13,6 +13,7 @@ public partial class LoaViewModel : ObservableObject
 {
     private ILoaRulesService LoaFetcher;
     private List<LoaRule> LoaRules;
+    private bool _isInitialized = false;
 
     [ObservableProperty]
     private string departureAirport;
@@ -26,12 +27,16 @@ public partial class LoaViewModel : ObservableObject
     {
         LoaFetcher = loaFetcher;
         MatchedLoaRules = new ObservableCollection<LoaRule>();
-        InitializeAsync();
     }
 
+    [RelayCommand]
     private async void InitializeAsync()
     {
-        LoaRules = await LoaFetcher.FetchLoaRulesAsync();
+        if (!_isInitialized)
+        {
+            LoaRules = await LoaFetcher.FetchLoaRulesAsync();
+            _isInitialized = true;
+        }
     }
 
     [RelayCommand]
@@ -39,10 +44,7 @@ public partial class LoaViewModel : ObservableObject
     {
         MatchedLoaRules.Clear();
 
-        if (String.IsNullOrEmpty(departureAirport) || String.IsNullOrEmpty(arrivalAirport))
-        {
-            return;
-        }
+        if (String.IsNullOrEmpty(departureAirport) || String.IsNullOrEmpty(arrivalAirport)) return;
 
         // Add K to start of airport ID if needed
         string sanitizedDeparture = (DepartureAirport.Length == 3 ? "K" : "") + DepartureAirport.ToUpper();

@@ -28,12 +28,9 @@ public sealed partial class SkyVectorPage : Page
         RouteTb.KeyDown += KeyHandlers.NewOnEnterCommandHandler(ViewModel.MakeUrlCommand);
 
         // Set focus on the Departure textbox once the page has fully loaded
-        Loaded += (sender, e) =>
-        {
-            DepAirportTb.Focus(FocusState.Programmatic);
-        };
+        Loaded += (sender, e) => DepAirportTb.Focus(FocusState.Programmatic);
 
         // Delete cookies to start fresh, but have to wait until CoreWebView2 object has started
-        WebView.CoreWebView2Initialized += (o, e) => { WebView.CoreWebView2.CookieManager.DeleteAllCookies(); };
+        WebView.CoreWebView2Initialized += (o, e) => WebView.CoreWebView2.CookieManager.DeleteAllCookies();
     }
 }
