@@ -1,7 +1,10 @@
 # ZOA Info Tool
 ZOA Info Tool is a desktop application to help the controllers of the [Oakland ARTCC on Vatsim](https://oakartcc.org/) quickly access status, routing and airspace information.
 
-The app is built using WinUI3 – the latest UI framework from Microsoft – and distributed as an unpackaged, self-contained executable + assemblies. Find the latest release: https://github.com/vzoa/info-tool/releases 
+The app is built using WinUI3 – the latest UI framework from Microsoft – and distributed as an unpackaged, self-contained executable + assemblies.
+
+# Download
+Find the latest release: https://github.com/vzoa/info-tool/releases 
 
 # Features
 * View real-world D-ATIS for ZOA airports (from https://datis.clowd.io/ API)
