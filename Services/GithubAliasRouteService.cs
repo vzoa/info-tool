@@ -38,7 +38,7 @@ public partial class GithubAliasRouteService : IAliasRouteService
                     int? arrivalRunway = commandMatch.Groups[4].Value == "" ? null : int.Parse(commandMatch.Groups[4].Value);
 
                     RouteType type = commandMatch.Groups[5] is null ? RouteType.Any : AliasRoute.StringToType(commandMatch.Groups[5].Value);
-                    string route = routeMatch.Groups[1].Value.Trim();
+                    string route = routeMatch.Groups[2].Value.Trim();
 
                     var newAliasRoute = new AliasRoute(departureAirport, departureRunway, arrivalAirport, arrivalRunway, route, type);
                     if (returnDict.TryGetValue(departureAirport, out List<AliasRoute> list))
@@ -62,6 +62,6 @@ public partial class GithubAliasRouteService : IAliasRouteService
     [GeneratedRegex(@"([a-zA-Z0-9]{3})([0-9]{0,2})([a-zA-Z0-9]{3})([0-9]{0,2})([TPJtpj]?)")]
     private static partial Regex CommandNameRegex();
 
-    [GeneratedRegex(@"\.am rte([^\$]*)(\$route)?")]
+    [GeneratedRegex(@"\.am rte (\$route)?([^\$]*)(\$route)?")]
     private static partial Regex RouteRegex();
 }
