@@ -57,67 +57,50 @@ public partial class IcaoCodesViewModel : ObservableObject
     [RelayCommand]
     public async void InitializeAsync()
     {
-        if (DataIsNotReady)
-        {
-            var airlineTask = AirlineIcaoFetcher.FetchAirlineIcaoCodesAsync();
-            var aircraftTask = AircraftIcaoFetcher.FetchAircraftIcaoCodesAsync();
-            var airportTask = AirportIcaoFetcher.FetchAirportsAsync();
+        if (DataIsReady) return;
 
-            await Task.WhenAll(airlineTask, aircraftTask, airportTask);
-            AirlineCodeLookupDict = airlineTask.Result;
-            AircraftCodeLookupDict = aircraftTask.Result;
-            AirportCodeLookupDict = airportTask.Result;
-            DataIsNotReady = false;
-            DataIsReady = true;
-        }
+        var airlineTask = AirlineIcaoFetcher.FetchAirlineIcaoCodesAsync();
+        var aircraftTask = AircraftIcaoFetcher.FetchAircraftIcaoCodesAsync();
+        var airportTask = AirportIcaoFetcher.FetchAirportsAsync();
+
+        await Task.WhenAll(airlineTask, aircraftTask, airportTask);
+        AirlineCodeLookupDict = airlineTask.Result;
+        AircraftCodeLookupDict = aircraftTask.Result;
+        AirportCodeLookupDict = airportTask.Result;
+        DataIsNotReady = false;
+        DataIsReady = true;
     }
 
     [RelayCommand]
     public void LookupAirline()
     {
-        if (AirlineCodeLookupDict is not null)
-        {
-            if (AirlineCodeLookupDict.TryGetValue(AirlineIcaoCodeInput.ToUpper(), out Airline value))
-            {
-                Airline = value;
-                AirlineFound = true;
-            }
-            else
-            {
-                AirlineFound = false;
-            }
-        }
+        if (AirportCodeLookupDict is null) return;
+
+        AirlineFound = AirlineCodeLookupDict.TryGetValue(AirlineIcaoCodeInput.ToUpper(), out Airline value);
+        if (AirlineFound) Airline = value;
     }
 
     [RelayCommand]
     public void LookupAirport()
     {
-        if (AirportCodeLookupDict is not null)
-        {
-            if (AirportCodeLookupDict.TryGetValue(AirportIcaoCodeInput.ToUpper(), out Airport value))
-            {
-                Airport = value;
-                AirportFound = true;
-            }
-            else
-            {
-                AirportFound = false;
-            }
-        }
+        if (AirportCodeLookupDict is null) return;
+
+        AirportFound = AirportCodeLookupDict.TryGetValue(AirportIcaoCodeInput.ToUpper(), out Airport value);
+        if (AirportFound) Airport = value;
     }
 
     [RelayCommand]
     public void LookupAircraft()
     {
         Aircrafts.Clear();
-        if (AircraftCodeLookupDict is not null)
+
+        if (AircraftCodeLookupDict is null) return;
+
+        if (AircraftCodeLookupDict.TryGetValue(AircraftIcaoCodeInput.ToUpper(), out List<Aircraft> values))
         {
-            if (AircraftCodeLookupDict.TryGetValue(AircraftIcaoCodeInput.ToUpper(), out List<Aircraft> values))
+            foreach (var aircraft in values)
             {
-                foreach (var aircraft in values)
-                {
-                    Aircrafts.Add(aircraft);
-                }
+                Aircrafts.Add(aircraft);
             }
         }
     }

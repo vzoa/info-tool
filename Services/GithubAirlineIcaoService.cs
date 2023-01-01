@@ -23,20 +23,18 @@ public class GithubAirlineIcaoService : IAirlineIcaoService
     public async Task<Dictionary<string, Airline>> FetchAirlineIcaoCodesAsync()
     {
         string responseBody = await _httpClient.GetStringAsync(Constants.AirlinesCsvUrl);
-
         var returnDict = new Dictionary<string, Airline>();
-        using (var csv = new CsvReader(new StringReader(responseBody), CultureInfo.InvariantCulture))
+
+        using var csv = new CsvReader(new StringReader(responseBody), CultureInfo.InvariantCulture);
+        csv.Context.RegisterClassMap<AirlineMap>();
+        var records = csv.GetRecords<Airline>();
+
+        foreach (var record in records)
         {
-            csv.Context.RegisterClassMap<AirlineMap>();
-            var records = csv.GetRecords<Airline>();
-
-            foreach (var record in records)
-            {
-                returnDict.Add(record.IcaoId, record);
-            }
-
-            return returnDict;
+            returnDict.Add(record.IcaoId, record);
         }
+
+        return returnDict;
     }
 }
 

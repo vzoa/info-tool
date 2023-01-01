@@ -1,4 +1,7 @@
-﻿namespace ZoaInfoTool.Models;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace ZoaInfoTool.Models;
 
 public class Constants
 {
@@ -23,4 +26,6 @@ public class Constants
 
     public const int ChartsCacheTtlSeconds = 86400; // 1 day
     public const int RoutesCacheTtlSeconds = 3600; // 1 hour
+
+    public static readonly ReadOnlyCollection<string> DatisZoaAirports = new(new List<string>() { "KOAK", "KRNO", "KSFO", "KSJC", "KSMF" });
 }

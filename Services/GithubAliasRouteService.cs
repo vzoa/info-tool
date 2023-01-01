@@ -26,30 +26,28 @@ public partial class GithubAliasRouteService : IAliasRouteService
         {
             for (string line = reader.ReadLine(); line is not null; line = reader.ReadLine())
             {
-                if (AmRteRegex().IsMatch(line))
+                if (!AmRteRegex().IsMatch(line)) continue;
+                
+                var commandMatch = CommandNameRegex().Match(line);
+                var routeMatch = RouteRegex().Match(line);
+                if (commandMatch.Success && routeMatch.Success)
                 {
-                    var commandMatch = CommandNameRegex().Match(line);
-                    var routeMatch = RouteRegex().Match(line);
-                    if (commandMatch.Success && routeMatch.Success)
+                    string departureAirport = commandMatch.Groups[1].Value.ToUpper();
+                    int? departureRunway = commandMatch.Groups[2].Value == "" ? null : int.Parse(commandMatch.Groups[2].Value);
+                    string arrivalAirport = commandMatch.Groups[3].Value.ToUpper();
+                    int? arrivalRunway = commandMatch.Groups[4].Value == "" ? null : int.Parse(commandMatch.Groups[4].Value);
+
+                    RouteType type = commandMatch.Groups[5] is null ? RouteType.Any : AliasRoute.StringToType(commandMatch.Groups[5].Value);
+                    string route = routeMatch.Groups[1].Value.Trim();
+
+                    var newAliasRoute = new AliasRoute(departureAirport, departureRunway, arrivalAirport, arrivalRunway, route, type);
+                    if (returnDict.TryGetValue(departureAirport, out List<AliasRoute> list))
                     {
-                        string departureAirport = commandMatch.Groups[1].Value.ToUpper();
-                        int? departureRunway = commandMatch.Groups[2].Value == "" ? null : int.Parse(commandMatch.Groups[2].Value);
-                        string arrivalAirport = commandMatch.Groups[3].Value.ToUpper();
-                        int? arrivalRunway = commandMatch.Groups[4].Value == "" ? null : int.Parse(commandMatch.Groups[4].Value);
-
-                        RouteType type = commandMatch.Groups[5] is null ? RouteType.Any : AliasRoute.StringToType(commandMatch.Groups[5].Value);
-                        string route = routeMatch.Groups[1].Value.Trim();
-
-                        var newAliasRoute = new AliasRoute(departureAirport, departureRunway, arrivalAirport, arrivalRunway, route, type);
-
-                        if (returnDict.TryGetValue(departureAirport, out List<AliasRoute> list))
-                        {
-                            list.Add(newAliasRoute);
-                        }
-                        else
-                        {
-                            returnDict.Add(departureAirport, new List<AliasRoute> { newAliasRoute });
-                        }
+                        list.Add(newAliasRoute);
+                    }
+                    else
+                    {
+                        returnDict.Add(departureAirport, new List<AliasRoute> { newAliasRoute });
                     }
                 }
             }

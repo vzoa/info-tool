@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -25,19 +26,9 @@ public class GithubLoaService : ILoaRulesService
     {
         string responseBody = await _httpClient.GetStringAsync(Constants.LoaRulesCsvUrl);
 
-        var returnList = new List<LoaRule>();
-        using (var csv = new CsvReader(new StringReader(responseBody), CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<LoaRuleMap>();
-            var records = csv.GetRecords<LoaRule>();
-
-            foreach (var record in records)
-            {
-                returnList.Add(record);
-            }
-
-            return returnList;
-        }
+        using var csv = new CsvReader(new StringReader(responseBody), CultureInfo.InvariantCulture);
+        csv.Context.RegisterClassMap<LoaRuleMap>();
+        return csv.GetRecords<LoaRule>().ToList<LoaRule>();
     }
 }
 

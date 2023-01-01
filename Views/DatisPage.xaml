@@ -30,12 +30,29 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ComboBox x:Name="AirportsComboBox" ItemsSource="{x:Bind ViewModel.AirportNames, Mode=OneWay}"
-                      Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                <ComboBox x:Name="AirportsComboBox" ItemsSource="{x:Bind ViewModel.DisplayedAirportNames, Mode=OneWay}"
+                      VerticalAlignment="Center" HorizontalAlignment="Left"
                       PlaceholderText="{x:Bind ViewModel.DropdownPlaceholderText, Mode=OneWay}"
                       SelectedItem="{x:Bind ViewModel.SelectedAirport, Mode=TwoWay}"
                       Width="200" FontFamily="Cascadia Code" IsEnabled="True">
-            </ComboBox>
+                </ComboBox>
+
+                <ToggleSwitch VerticalAlignment="Center" OffContent="ZOA Only" OnContent="All" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Cascadia Code" Margin="20,0,0,0" Toggled="ToggleSwitch_Toggled">
+                    <ToggleSwitch.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Dark">
+                                    <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#333333" />
+                                    <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="#3a3a3a" />
+                                    <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="#3a3a3a" />
+                                </ResourceDictionary>
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </ToggleSwitch.Resources>
+                </ToggleSwitch>
+            </StackPanel>
+            
 
 
             <ToggleSwitch AutomationProperties.Name="simple ToggleSwitch" x:Name="dark_switch" Grid.Column="1" CornerRadius="3"

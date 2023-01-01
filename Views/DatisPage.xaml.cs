@@ -23,9 +23,11 @@ public sealed partial class DatisPage : Page
         this.InitializeComponent();
         DataContext = App.Current.Services.GetRequiredService<DatisViewModel>();
 
-        Loaded += (sender, e) => AirportsComboBox.Focus(FocusState.Programmatic);
+        Loaded += (_, _) => AirportsComboBox.Focus(FocusState.Programmatic);
 
         // Command viewmodel to fetch data on page load
         Loaded += (_, _) => ViewModel.StartUpdateLoopCommand.Execute(null);
     }
+
+    private void ToggleSwitch_Toggled(object s, RoutedEventArgs e) => ViewModel.AirportListToggleCommand.Execute(null);
 }
