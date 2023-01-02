@@ -13,6 +13,7 @@ Find the latest release: https://github.com/vzoa/info-tool/releases
 * Search LOAs betwen ZOA and neighboring ARTCCs for specific routing rules between 2 airports, or for general rules
 * Search the ZOA "alias route" file for prescribed routing between intra-NCT and intra-ZOA airports
 * Lookup information based on aircraft, airline or airport ICAO code
+* Checks GitHub for new versions and prompts user to download if available
 
 # Functionality Tips & Tricks
 * You can use "numbered" hotkeys (`Ctrl+Alt+1`, `Ctrl+Alt+2`, `Ctrl+Alt+3`, etc.) to quickly change tabs
