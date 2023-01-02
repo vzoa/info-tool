@@ -56,7 +56,7 @@
                     <!--  Header template (you can see IReadOnlyObservableGroup being used here)  -->
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate x:DataType="collections:IReadOnlyObservableGroup">
-                            <TextBlock FontSize="18" Foreground="White" FontStyle="Italic" FontWeight="Bold" Text="{Binding Key, Converter={StaticResource ChartTypeConverter}}" />
+                            <TextBlock FontSize="18" Foreground="White" FontStyle="Italic" FontWeight="Bold" Text="{x:Bind Key, Converter={StaticResource ChartTypeConverter}}" />
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>

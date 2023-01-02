@@ -89,17 +89,16 @@ public partial class DatisViewModel : ObservableObject
 
                 // If the list of airports has changed, update the dropdown on the UI Thread
                 // so that notifications are captured by UI. Using hash sets to be order invariant.
-                // Also update visible ATIS every time we get new data
                 var existingAirportsHash = new HashSet<string>(DisplayedAirportNames);
                 var newAirportsHash = new HashSet<string>(visibleAirportNames);
                 if (!existingAirportsHash.SetEquals(newAirportsHash))
                 {
-                    Dispatcher.TryEnqueue(() =>
-                    {
-                        UpdateDropdownList(visibleAirportNames);
-                        UpdateVisibleAtis();
-                    });
+                    Dispatcher.TryEnqueue(() => UpdateDropdownList(visibleAirportNames));
                 }
+
+                // Also update visible ATIS every time we get new data, regardless of
+                // whether or not airport list changed
+                Dispatcher.TryEnqueue(() => UpdateVisibleAtis());
 
                 // Wait to loop with some delay (default 60 seconds)
                 await Task.Delay(Constants.AtisUpdateDelayMilliseconds);
