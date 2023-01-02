@@ -6,6 +6,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ZoaInfoTool.Views"
+    xmlns:models="using:ZoaInfoTool.Models"
     xmlns:utils="using:ZoaInfoTool.Utils"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -54,7 +55,7 @@
 
         <ListView x:Name="RoutesListView" Grid.Row="2" ItemsSource="{x:Bind ViewModel.MatchedAliasRoutes}" Margin="0,5,0,0">
             <ListView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:AliasRoute">
                     <Grid Margin="0" Padding="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -63,10 +64,10 @@
                             <ColumnDefinition Width="6*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding DepartureRunway, Converter={StaticResource RunwayConverter}}" />
-                        <TextBlock Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding ArrivalRunway, Converter={StaticResource RunwayConverter}}" />
-                        <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding RouteType}" />
-                        <TextBlock Grid.Column="3" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding Route}" TextWrapping="Wrap" />
+                        <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind DepartureRunway, Converter={StaticResource RunwayConverter}}" />
+                        <TextBlock Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind ArrivalRunway, Converter={StaticResource RunwayConverter}}" />
+                        <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind RouteType}" Foreground="{x:Bind utils:Converters.RouteTypeToColor(RouteType)}" />
+                        <TextBlock Grid.Column="3" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind Route}" TextWrapping="Wrap" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

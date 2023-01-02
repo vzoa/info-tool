@@ -50,13 +50,14 @@ public partial class LoaViewModel : ObservableObject
         string sanitizedDeparture = (DepartureAirport.Length == 3 ? "K" : "") + DepartureAirport.ToUpper();
         string sanitizedArrival = (ArrivalAirport.Length == 3 ? "K" : "") + ArrivalAirport.ToUpper();
 
-        // TODO: check also that departure airport is in ZOA
-        foreach (var rule in LoaRules)
+        // TODO: check also that departure airport is in ZOA. Some of the regex are wildcards that let anything through
+        var matchedRules = LoaRules
+            .Where(rule => rule.DepartureAirportRegex.IsMatch(sanitizedDeparture) && rule.ArrivalAirportRegex.IsMatch(sanitizedArrival))
+            .OrderByDescending(rule => rule.IsRnavRequired);
+
+        foreach (var rule in matchedRules)
         {
-            if (rule.DepartureAirportRegex.IsMatch(sanitizedDeparture) && rule.ArrivalAirportRegex.IsMatch(sanitizedArrival))
-            {
-                MatchedLoaRules.Add(rule);
-            }
+            MatchedLoaRules.Add(rule);
         }
     }
 }

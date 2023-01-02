@@ -27,6 +27,6 @@ public sealed partial class ChartsPage : Page
         AirportTb.KeyDown += KeyHandlers.NewOnEnterCommandHandler(ViewModel.FetchChartsCommand);
 
         // Set focus on the Airport textbox once the page has fully loaded
-        Loaded += (sender, e) => AirportTb.Focus(FocusState.Programmatic);
+        Loaded += (_, _) => AirportTb.Focus(FocusState.Programmatic);
     }
 }

@@ -28,8 +28,8 @@ public sealed partial class CodesPage : Page
         AirportTb.KeyDown += KeyHandlers.NewOnEnterCommandHandler(ViewModel.LookupAirportCommand);
 
         // Set focus on the Airline textbox once the page has fully loaded
-        AirlineTb.IsEnabledChanged += (sender, e) => AirlineTb.Focus(FocusState.Programmatic);
-        Loaded += (sender, e) => AirlineTb.Focus(FocusState.Programmatic);
+        AirlineTb.IsEnabledChanged += (_, _) => AirlineTb.Focus(FocusState.Programmatic);
+        Loaded += (_, _) => AirlineTb.Focus(FocusState.Programmatic);
 
         Loaded += (_, _) => ViewModel.InitializeAsyncCommand.Execute(null);
     }

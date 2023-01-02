@@ -34,7 +34,7 @@ public sealed partial class TecPage : Page
         ArrAirportTb.KeyDown += KeyHandlers.NewOnEnterCommandHandler(ViewModel.MatchAliasRoutesCommand);
 
         // Set focus on the Departure textbox once the page has fully loaded
-        Loaded += (sender, e) => DepAirportTb.Focus(FocusState.Programmatic);
+        Loaded += (_, _) => DepAirportTb.Focus(FocusState.Programmatic);
 
         // Command viewmodel to fetch data on page load
         Loaded += (_, _) => ViewModel.InitializeAsyncCommand.Execute(null);

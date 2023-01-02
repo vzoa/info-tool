@@ -19,6 +19,7 @@
 	<WindowsPackageType>None</WindowsPackageType>
 	<PublishTrimmed>true</PublishTrimmed>
 	<InvariantGlobalization>true</InvariantGlobalization>
+	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 
 	<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 

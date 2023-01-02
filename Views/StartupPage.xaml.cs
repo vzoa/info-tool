@@ -20,14 +20,14 @@ namespace ZoaInfoTool.Views;
 /// </summary>
 public sealed partial class StartupPage : Page
 {
+    public Version AssemblyVersion => Assembly.GetEntryAssembly().GetName().Version;
+
     public StartupPage()
     {
         this.InitializeComponent();
         Loaded += (_, _) => CheckForUpdate();
     }
-
-    public Version AssemblyVersion => Assembly.GetEntryAssembly().GetName().Version;
-    
+        
     public async Task<Release?> GetLatestRelease()
     {
         var client = new GitHubClient(new ProductHeaderValue("ZoaInfoTool"));

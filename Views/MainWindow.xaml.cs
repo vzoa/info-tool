@@ -168,8 +168,7 @@ public sealed partial class MainWindow : Window
     {
         // Check to see if customization is supported.
         // Currently only supported on Windows 11.
-        if (AppWindowTitleBar.IsCustomizationSupported()
-            && appWindow.TitleBar.ExtendsContentIntoTitleBar)
+        if (AppWindowTitleBar.IsCustomizationSupported() && appWindow.TitleBar.ExtendsContentIntoTitleBar)
         {
             double scaleAdjustment = GetScaleAdjustment();
 

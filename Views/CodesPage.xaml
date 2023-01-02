@@ -7,6 +7,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ZoaInfoTool.Views"
     xmlns:utils="using:ZoaInfoTool.Utils"
+    xmlns:models="using:ZoaInfoTool.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -133,7 +134,7 @@
 
                     <ListView x:Name="RoutesListView" Grid.Row="1" Grid.ColumnSpan="6" ItemsSource="{x:Bind ViewModel.Aircrafts}" Margin="0,5,0,0">
                         <ListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Aircraft">
                                 <Grid Margin="0" Padding="0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*" />
@@ -144,12 +145,12 @@
                                         <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding Manufacturer}" TextWrapping="Wrap" />
-                                    <TextBlock Grid.Column="1" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding Model}" TextWrapping="Wrap" />
-                                    <TextBlock Grid.Column="2" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding Description}" TextWrapping="Wrap" />
-                                    <TextBlock Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding EngineType}" />
-                                    <TextBlock Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding EngineCount}" />
-                                    <TextBlock Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{Binding FaaWakeTurbulenceCategory}" />
+                                    <TextBlock Grid.Column="0" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind Manufacturer}" TextWrapping="Wrap" />
+                                    <TextBlock Grid.Column="1" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind Model}" TextWrapping="Wrap" />
+                                    <TextBlock Grid.Column="2" TextAlignment="Left" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind Description}" TextWrapping="Wrap" />
+                                    <TextBlock Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind EngineType}" />
+                                    <TextBlock Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind EngineCount}" />
+                                    <TextBlock Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center" Padding="15,0,0,0" Text="{x:Bind FaaWakeTurbulenceCategory}" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

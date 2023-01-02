@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using ZoaInfoTool.Models;
 using ZoaInfoTool.Services.Interfaces;
 
@@ -44,8 +45,8 @@ public partial class AliasRouteViewModel : ObservableObject
 
         MatchedAliasRoutes.Clear();
 
-        string departureLookup = departureAirport.Length == 4 ? departureAirport.Substring(1).ToUpper() : departureAirport.ToUpper();
-        string arrivalLookup = arrivalAirport.Length == 4 ? arrivalAirport.Substring(1).ToUpper() : arrivalAirport.ToUpper();
+        string departureLookup = departureAirport.Length == 4 ? departureAirport[1..].ToUpper() : departureAirport.ToUpper();
+        string arrivalLookup = arrivalAirport.Length == 4 ? arrivalAirport[1..].ToUpper() : arrivalAirport.ToUpper();
 
         if (AliasRoutesLookupDict.TryGetValue(departureLookup, out List<AliasRoute> outList))
         {

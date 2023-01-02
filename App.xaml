@@ -30,6 +30,11 @@
                             <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="RoyalBlue" Opacity="0.2"/>
                             <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="RoyalBlue" />
 
+                            <SolidColorBrush x:Key="AnyRoute" Color="White" />
+                            <SolidColorBrush x:Key="JetRoute" Color="Yellow" />
+                            <SolidColorBrush x:Key="TurbopropRoute" Color="Yellow" />
+                            <SolidColorBrush x:Key="PropRoute" Color="Yellow" />
+
                             <!--<SolidColorBrush x:Key="AppBarButtonBackground" Color="RoyalBlue" Opacity="0.2"/>
                             <SolidColorBrush x:Key="AppBarButtonBackgroundPointerOver" Color="RoyalBlue" Opacity="0.4"/>
                             <SolidColorBrush x:Key="AppBarButtonBackgroundPressed" Color="RoyalBlue" Opacity="0.7"/>
