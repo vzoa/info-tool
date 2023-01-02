@@ -3,8 +3,12 @@ ZOA Info Tool is a desktop application to help the controllers of the [Oakland A
 
 The app is built using WinUI3 – the latest UI framework from Microsoft – and distributed as an unpackaged, self-contained executable + assemblies.
 
-# Download
-Find the latest release: https://github.com/vzoa/info-tool/releases 
+# Download and Installation
+Find the latest Zip archive release: https://github.com/vzoa/info-tool/releases 
+
+Unzip the folder anywhere you choose and run `ZoaInfo.exe` to start the program. The app is self-contained (i.e., includes all dependencies) does not need any installation or separate downloads.
+
+**Requires Windows 10, October 2018 Update or newer**. Requires Windows 11, October 2021 Update for customized title bar.
 
 # Features
 * View real-world D-ATIS for ZOA airports (from https://datis.clowd.io/ API)
