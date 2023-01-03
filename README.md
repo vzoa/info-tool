@@ -34,4 +34,4 @@ Unzip the folder anywhere you choose and run `ZoaInfo.exe` to start the program.
 * View VATSIM D-ATIS for ZOA and neighboring ARTCCs
 
 # Bugs?
-Submit issues on GitHub: https://github.com/vzoa/info-tool/issues
+Submit issues on GitHub (https://github.com/vzoa/info-tool/issues) or on the ZOA Discord.
