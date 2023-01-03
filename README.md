@@ -14,9 +14,9 @@ Unzip the folder anywhere you choose and run `ZoaInfo.exe` to start the program.
 
 # Features
 * View real-world D-ATIS for ZOA airports (from https://datis.clowd.io/ API)
-* Search for real-world IFR routes betwen two airports (from FlightAware)
+* Search for real-world IFR routes between two airports (from FlightAware)
 * Embedded browser to quickly view routes on SkyVector
-* Search LOAs betwen ZOA and neighboring ARTCCs for specific routing rules between 2 airports, or for general rules
+* Search LOAs between ZOA and neighboring ARTCCs for specific routing rules between 2 airports, or for general rules
 * Search the ZOA "alias route" file for prescribed routing between intra-NCT and intra-ZOA airports
 * Get links for all FAA charts for an airport, grouped by chart type
 * Lookup information based on aircraft, airline or airport ICAO code
