@@ -1,3 +1,5 @@
+# ARCHIVED -- Replaced with a [web implementation](https://github.com/vzoa/info-tool-web)
+
 # ZOA Info Tool
 ZOA Info Tool is a desktop application to help the controllers of the [Oakland ARTCC on Vatsim](https://oakartcc.org/) quickly access status, routing and airspace information.
 
